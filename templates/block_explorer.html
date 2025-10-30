@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AfriCryptChain Explorer</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1>🌍 AfriCryptChain Block Explorer</h1>
+  <div class="chain-stats">
+    <p>🔗 Latest Hash: {{ latest_hash }}</p>
+    <p>📦 Chain Height: {{ chain_height }}</p>
+    <p>🔨 Mining Status: {{ mining_status }}</p>
+  </div>
+  <hr/>
+  <div class="block-list">
+    {% for block in blocks %}
+    <div class="block-card {% if block.index == 0 %}genesis{% endif %}">
+      <h2>🧱 Block #{{ block.index }}</h2>
+      <p>🔗 Hash: {{ block.hash[:10] }}...{{ block.hash[-6:] }}</p>
+      <p>⛓ Prev: {{ block.previous_hash[:10] }}...</p>
+      <p>🕒 Time: {{ block.timestamp }}</p>
+      <p>🧾 TX Count: {{ block.transactions|length }}</p>
+      <div class="tx-list">
+        {% for tx in block.transactions %}
+        <p>💸 {{ tx.sender_pub_key[:6] }} → {{ tx.recipient }} : {{ tx.amount }}</p>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</body>
+</html>
